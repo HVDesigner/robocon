@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./../App.css";
 import { Button, Container, Row, Col } from "react-bootstrap";
 import Second from "./../components/second";
+import XCircle from "./../svg/x_circle";
 
 function Home({ initTime = { minute: 10, second: 0 } }) {
   const [isStart, setIsStart] = useState(false);
@@ -11,13 +12,6 @@ function Home({ initTime = { minute: 10, second: 0 } }) {
     red: { minute: 0, second: 0 },
     blue: { minute: 0, second: 0 },
   });
-
-  const resetResult = () => {
-    setPointTime({
-      red: { minute: 0, second: 0 },
-      blue: { minute: 0, second: 0 },
-    });
-  };
 
   const start = () => {
     setIsStart((x) => !x);
@@ -65,7 +59,6 @@ function Home({ initTime = { minute: 10, second: 0 } }) {
               variant="danger"
               onClick={() => {
                 setTimer(initTime);
-                resetResult();
               }}
             >
               Đặt lại
@@ -89,11 +82,24 @@ function Home({ initTime = { minute: 10, second: 0 } }) {
                 Hoàn thành
               </Button>
             ) : (
-              <h1>{`${pointTime.blue.minute > 9 ? "" : 0}${
-                pointTime.blue.minute
-              }:${pointTime.blue.second > 9 ? "" : 0}${
-                pointTime.blue.second
-              }`}</h1>
+              <h1>
+                {`${pointTime.blue.minute > 9 ? "" : 0}${
+                  pointTime.blue.minute
+                }:${pointTime.blue.second > 9 ? "" : 0}${
+                  pointTime.blue.second
+                }`}
+                <span className="text-muted ms-3">
+                  <XCircle
+                    role={"button"}
+                    onClick={() =>
+                      setPointTime((x) => ({
+                        ...x,
+                        blue: { minute: 0, second: 0 },
+                      }))
+                    }
+                  />
+                </span>
+              </h1>
             )}
           </div>
         </Col>
@@ -112,11 +118,22 @@ function Home({ initTime = { minute: 10, second: 0 } }) {
                 Hoàn thành
               </Button>
             ) : (
-              <h1>{`${pointTime.red.minute > 9 ? "" : 0}${
-                pointTime.red.minute
-              }:${pointTime.red.second > 9 ? "" : 0}${
-                pointTime.red.second
-              }`}</h1>
+              <h1>
+                {`${pointTime.red.minute > 9 ? "" : 0}${pointTime.red.minute}:${
+                  pointTime.red.second > 9 ? "" : 0
+                }${pointTime.red.second}`}
+                <span className="text-muted ms-3">
+                  <XCircle
+                    role={"button"}
+                    onClick={() =>
+                      setPointTime((x) => ({
+                        ...x,
+                        red: { minute: 0, second: 0 },
+                      }))
+                    }
+                  />
+                </span>
+              </h1>
             )}
           </div>
         </Col>
